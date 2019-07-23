@@ -13,11 +13,13 @@ struct checktime_timer {
    void start(fc::time_point tp);
    void stop();
 
+   void add_expiry_callback(void(*func)(void*), void* user);
+
    volatile sig_atomic_t expired = 1;
 
 private:
    struct impl;
-   constexpr static size_t fwd_size = 8;
+   constexpr static size_t fwd_size = 40;
    fc::fwd<impl,fwd_size> my;
 };
 

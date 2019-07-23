@@ -14,9 +14,15 @@ namespace eosio { namespace chain {
 
 struct checktime_timer::impl {
    timer_t timerid;
+   volatile sig_atomic_t* expired_ptr;
+   std::vector<std::pair<void(*)(void*), void*>> callbacks;
 
    static void sig_handler(int, siginfo_t* si, void*) {
-      *(sig_atomic_t*)(si->si_value.sival_ptr) = 1;
+      checktime_timer::impl* me = (checktime_timer::impl*)si->si_value.sival_ptr;
+      *me->expired_ptr = 1;
+
+      for(size_t i = 0; i < me->callbacks.size(); ++i)
+         me->callbacks[i].first(me->callbacks[i].second);
    }
 };
 
@@ -38,7 +44,8 @@ checktime_timer::checktime_timer() {
    struct sigevent se;
    se.sigev_notify = SIGEV_SIGNAL;
    se.sigev_signo = SIGRTMIN;
-   se.sigev_value.sival_ptr = (void*)&expired;
+   se.sigev_value.sival_ptr = (void*)&my;
+   my->expired_ptr = &expired;
 
    FC_ASSERT(timer_create(CLOCK_REALTIME, &se, &my->timerid) == 0, "failed to create timer");
 
@@ -47,6 +54,10 @@ checktime_timer::checktime_timer() {
 
 checktime_timer::~checktime_timer() {
    timer_delete(my->timerid);
+}
+
+void checktime_timer::add_expiry_callback(void(*func)(void*), void* user) {
+   my->callbacks.emplace_back(func, user);
 }
 
 void checktime_timer::start(fc::time_point tp) {
