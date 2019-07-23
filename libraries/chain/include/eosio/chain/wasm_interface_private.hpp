@@ -37,9 +37,9 @@ namespace eosio { namespace chain {
       struct by_first_block_num;
       struct by_last_block_num;
 
-      wasm_interface_impl(wasm_interface::vm_type vm, const chainbase::database& d) : db(d) {
+      wasm_interface_impl(wasm_interface::vm_type vm, const chainbase::database& d, checktime_timer& timer) : db(d) {
          if(vm == wasm_interface::vm_type::wavm)
-            runtime_interface = std::make_unique<webassembly::wavm::wavm_runtime>();
+            runtime_interface = std::make_unique<webassembly::wavm::wavm_runtime>(timer);
          else if(vm == wasm_interface::vm_type::wabt)
             runtime_interface = std::make_unique<webassembly::wabt_runtime::wabt_runtime>();
          else

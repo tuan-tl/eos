@@ -29,7 +29,7 @@ namespace eosio { namespace chain {
    using namespace webassembly;
    using namespace webassembly::common;
 
-   wasm_interface::wasm_interface(vm_type vm, const chainbase::database& d) : my( new wasm_interface_impl(vm, d) ) {}
+   wasm_interface::wasm_interface(vm_type vm, const chainbase::database& d, checktime_timer& timer) : my( new wasm_interface_impl(vm, d, timer) ) {}
 
    wasm_interface::~wasm_interface() {}
 

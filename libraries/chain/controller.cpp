@@ -217,6 +217,7 @@ struct controller_impl {
    optional<pending_state>        pending;
    block_state_ptr                head;
    fork_database                  fork_db;
+   checktime_timer                timer;
    wasm_interface                 wasmif;
    resource_limits_manager        resource_limits;
    authorization_manager          authorization;
@@ -230,7 +231,6 @@ struct controller_impl {
    bool                           trusted_producer_light_validation = false;
    uint32_t                       snapshot_head_block = 0;
    named_thread_pool              thread_pool;
-   checktime_timer                timer;
 
    typedef pair<scope_name,action_name>                   handler_key;
    map< account_name, map<handler_key, apply_handler> >   apply_handlers;
@@ -288,7 +288,7 @@ struct controller_impl {
         cfg.reversible_cache_size, false, cfg.db_map_mode, cfg.db_hugepage_paths ),
     blog( cfg.blocks_dir ),
     fork_db( cfg.state_dir ),
-    wasmif( cfg.wasm_runtime, db ),
+    wasmif( cfg.wasm_runtime, db, timer ),
     resource_limits( db ),
     authorization( s, db ),
     protocol_features( std::move(pfs) ),
