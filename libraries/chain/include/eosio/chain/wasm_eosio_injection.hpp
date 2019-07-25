@@ -676,9 +676,6 @@ namespace eosio { namespace chain { namespace wasm_injections {
    };
 
    struct pre_op_injectors : wasm_ops::op_types<pass_injector> {
-      using call_t            = wasm_ops::call                    <call_depth_check_and_insert_checktime>;
-      using call_indirect_t   = wasm_ops::call_indirect           <call_depth_check_and_insert_checktime>;
-      
       // float binops 
       using f32_add_t         = wasm_ops::f32_add                 <f32_binop_injector<wasm_ops::f32_add_code>>;
       using f32_sub_t         = wasm_ops::f32_sub                 <f32_binop_injector<wasm_ops::f32_sub_code>>;
@@ -781,8 +778,6 @@ namespace eosio { namespace chain { namespace wasm_injections {
             _module_injectors.init();
             // initialize static fields of injectors
             injector_utils::init( mod );
-            checktime_injection::init();
-            call_depth_check_and_insert_checktime::init();
          }
 
          void inject() {
