@@ -43,9 +43,9 @@ If you have previously installed EOSIO using build scripts, please execute `eosi
 
 Clone EOSIO source code and update submodules:
 ```sh
-git clone https://github.com/tuan-tl/eosio.git eosio-1.8.12
-cd eosio-1.8.12
-git checkout tags/v1.8.12
+git clone https://github.com/tuan-tl/eosio.git eosio-1.8-latest
+cd eosio-1.8-latest
+git checkout 1.8-latest
 git submodule update --init --recursive
 ```
 Build EOSIO binaries:
