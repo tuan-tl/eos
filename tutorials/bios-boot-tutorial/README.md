@@ -1,8 +1,17 @@
+{% raw %}
+If the `str` contains more `a` than `b` / there are unmatched pairs, 
+the first match that was closed will be used. For example, `{{a}` 
+will match `['{', 'a', '']` and `{a}}` will match `['', 'a', '}']`.
+{% endraw %}
 # Bios Boot Tutorial
 
 The `bios-boot-tutorial.py` script simulates the EOSIO bios boot sequence.
 
 ``Prerequisites``:
+
+## Dependencies
+* [EOSIO binaries](https://techiast.com/development/dependencies/eosio)
+* [EOSIO.cdt binaries]()
 
 1. Python 3.x
 2. CMake
