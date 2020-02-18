@@ -1,7 +1,7 @@
 
 # EOSIO Setup Guideline
 This is a step-by-step guideline to install EOSIO, which can be done via 2 methods:
-* [Install by Prebuilt Binaries](#Install-by-prebuilt-binaries)
+* [Install by Prebuilt Binaries](#install-by-prebuilt-binaries)
 * [Install by building from Source Code](#Install-by-building-from-Source-Code)
 
 ## Install by Prebuilt Binaries
